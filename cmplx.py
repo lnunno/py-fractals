@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
-import cv2
+# import cv2
 
 def mandelbrot(z, c):
     return (z**2) + c
@@ -27,16 +27,16 @@ def fractal(z, c, z_func=mandelbrot, color_func=complex_to_color):
     return i
 
 
-def complex_plane(size_real, size_complex, num_points, start_real=0, start_complex=0):
-    x = np.linspace(complex(start_real), complex(size_real), num=num_points)
-    y = np.linspace(complex(0, start_complex), complex(0,size_complex), num=num_points)
+def complex_plane(start_real, start_complex, end_real, end_complex, num_points):
+    x = np.linspace(complex(start_real), complex(end_real), num=num_points)
+    y = np.linspace(complex(0, start_complex), complex(0,end_complex), num=num_points)
     XX, YY = np.meshgrid(x,y)
-    XX_corrected = XX - ((start_real+size_real)/2)
-    YY_corrected = np.flipud(YY) - (complex(0, ((start_complex+size_complex)/2)))
+    XX_corrected = XX
+    YY_corrected = np.flipud(YY)
     return XX_corrected + YY_corrected
 
-def make_fractal_image(size_real, size_complex, num_points, start_real=0, start_complex=0):
-    plane = complex_plane(size_real, size_complex, num_points, start_real, start_complex)
+def make_mandel_array(num_points):
+    plane = complex_plane(-2, -2, 1, 1, num_points)
     matrix_function = np.vectorize(lambda c: fractal(complex(0),c))
     result = matrix_function(plane)
     return result

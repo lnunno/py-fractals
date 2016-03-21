@@ -11,17 +11,16 @@ def complex_to_color(c, i):
     :param c: Complex number
     :param i: number of iterations done to get this complex number.
     '''
-    return (c.real, c.imag, i)
+    return [c.real, c.imag, i]
 
-def fractal(z, c, z_func=mandelbrot, color_func=complex_to_color):
+def fractal(z, c, z_func=mandelbrot, color_func=complex_to_color, num_iterations=256, threshold=2):
     '''
     :return: True if this z value is in the set, False otherwise.
     '''
-    num_iterations = 256
     zn = z
     for i in xrange(1,num_iterations):
         zn1 = z_func(z,c)
-        if abs(zn1) > 2:
+        if abs(zn1) > threshold:
             return i
         z = zn1
     return i
